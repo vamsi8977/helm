@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myapp-logging-config
+  namespace: {{ .Values.nameSpace }}
+data:
+  loki.yaml: |-
+    server:
+      http_listen_port: 3100
+    positions:
+      filename: /tmp/positions.yaml
+    clients:
+      - url: http://loki:3100/loki/api/v1/push
+        external_labels:
+          job: myapp

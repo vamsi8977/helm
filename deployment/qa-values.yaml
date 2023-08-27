@@ -1,0 +1,28 @@
+replicaCount: 2
+nameSpace: vamsi-qa
+image:
+  deploy: gcr.io/google-samples/gb-frontend:v5
+  master: k8s.gcr.io/redis:e2e
+  slave: gcr.io/google_samples/gb-redisslave:v2
+service:
+  type: ClusterIP
+  internal: 80
+  port: 6380
+resources:
+  requests:
+    cpu: 100m
+    memory: 100Mi
+enableHPA: true
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilization: 30
+prometheus:
+  enabled: true
+  config: |-
+    # Add the content of your prometheus-config.yaml here
+loki:
+  enabled: true
+  config: |-
+    # Add the content of your loki-config.yaml here
